@@ -29,6 +29,7 @@ export default function Nav() {
           <div className="hidden md:flex gap-7">
             {[
               { href: "/shop", label: "Shop" },
+              { href: "/journal", label: "Journal" },
               { href: "/#how-it-folds", label: "How it folds" },
               { href: "/#founder", label: "Studio" },
             ].map(({ href, label }) => (

@@ -138,7 +138,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex gap-3.5 items-center">
-                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 32 }}>{formatPrice(featured.price_cents)}</span>
+                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 32 }}>{formatPrice(featured.price_jpy)}</span>
                   <span
                     className="pl-3.5 border-l border-[rgba(60,58,54,0.12)]"
                     style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}

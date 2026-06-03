@@ -11,7 +11,7 @@ import {
 export type CartItem = {
   slug: string;
   name: string;
-  price_cents: number;
+  price_jpy: number;
   image: string;
   quantity: number;
 };
@@ -82,7 +82,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [state.items]);
 
   const total = state.items.reduce(
-    (sum, i) => sum + i.price_cents * i.quantity,
+    (sum, i) => sum + i.price_jpy * i.quantity,
     0
   );
   const count = state.items.reduce((sum, i) => sum + i.quantity, 0);

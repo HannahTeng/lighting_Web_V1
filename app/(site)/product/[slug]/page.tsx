@@ -97,7 +97,7 @@ export default async function ProductPage({ params }: Props) {
                   <em className="italic">{product.name.split(" ").at(-1)}.</em>
                 </h1>
                 <div className="flex justify-between items-baseline pt-2.5">
-                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28 }}>{formatPrice(product.price_cents)}</span>
+                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28 }}>{formatPrice(product.price_jpy)}</span>
                   <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}>
                     SKU · {product.slug.toUpperCase().slice(0, 12)}
                   </span>

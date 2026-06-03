@@ -25,7 +25,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.paper}
           </div>
         </div>
-        <div className="font-serif text-[19px] shrink-0">{formatPrice(product.price_cents)}</div>
+        <div className="font-serif text-[19px] shrink-0">{formatPrice(product.price_jpy)}</div>
       </div>
     </Link>
   );

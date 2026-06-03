@@ -5,8 +5,6 @@ import {
   JetBrains_Mono,
 } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import Nav from "@/components/nav";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -52,13 +50,10 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} ${jetbrains.variable}`}
     >
       <body
-        className="min-h-screen flex flex-col"
+        className="min-h-screen"
         style={{ fontFamily: "var(--font-inter), -apple-system, system-ui, sans-serif" }}
       >
-        <CartProvider>
-          <Nav />
-          <main className="flex-1">{children}</main>
-        </CartProvider>
+        {children}
       </body>
     </html>
   );

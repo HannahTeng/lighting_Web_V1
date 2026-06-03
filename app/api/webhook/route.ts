@@ -31,11 +31,48 @@ export async function POST(req: NextRequest) {
     const sql = getDb();
     if (sql) {
       try {
-        await sql`
-          INSERT INTO orders (stripe_session_id, email, status, total_cents)
+        // Insert the order. RETURNING id is empty on conflict, making the
+        // whole handler idempotent under Stripe retries.
+        const inserted = await sql`
+          INSERT INTO orders (stripe_session_id, email, status, total_jpy)
           VALUES (${session.id}, ${session.customer_details?.email ?? ""}, 'paid', ${session.amount_total ?? 0})
           ON CONFLICT (stripe_session_id) DO NOTHING
+          RETURNING id
         `;
+        const orderId = (inserted[0] as { id: number } | undefined)?.id;
+
+        if (orderId) {
+          // Persist line items from the compact metadata payload.
+          const itemsRaw = session.metadata?.items;
+          if (itemsRaw) {
+            try {
+              const items = JSON.parse(itemsRaw) as {
+                s: string;
+                q: number;
+                p: number;
+              }[];
+              for (const it of items) {
+                const prod = await sql`SELECT id FROM products WHERE slug = ${it.s} LIMIT 1`;
+                const productId = (prod[0] as { id: number } | undefined)?.id ?? null;
+                await sql`
+                  INSERT INTO order_items (order_id, product_id, quantity, price_jpy)
+                  VALUES (${orderId}, ${productId}, ${it.q}, ${it.p})
+                `;
+              }
+            } catch (e) {
+              console.error("order_items insert failed:", e);
+            }
+          }
+
+          // Count a coupon redemption.
+          const coupon = session.metadata?.coupon;
+          if (coupon) {
+            await sql`
+              UPDATE coupons SET used_count = used_count + 1
+              WHERE LOWER(code) = LOWER(${coupon})
+            `;
+          }
+        }
       } catch (e) {
         console.error("DB insert failed:", e);
       }
