@@ -14,6 +14,7 @@ export default function CartDrawer({
 }) {
   const { items, remove, setQty, total, count } = useCart();
   const [loading, setLoading] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function CartDrawer({
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items }),
+        body: JSON.stringify({ items, couponCode: couponCode.trim() || undefined }),
       });
       const data = await res.json();
       if (data.url) {
@@ -128,6 +129,13 @@ export default function CartDrawer({
         {/* footer */}
         {items.length > 0 && (
           <div className="px-8 py-6 border-t border-[rgba(60,58,54,0.12)] space-y-4">
+            <input
+              type="text"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              placeholder="Discount code"
+              className="w-full px-3 py-2.5 rounded-sm bg-bg-alt border border-[rgba(60,58,54,0.12)] font-mono text-[11px] tracking-[0.12em] uppercase text-ink outline-none focus:border-ink/40 transition-colors placeholder:text-stone"
+            />
             <div className="flex justify-between items-baseline">
               <span className="font-mono text-[10.5px] tracking-[0.14em] uppercase text-ink-soft">Total</span>
               <span className="font-serif text-[28px]">{formatPrice(total)}</span>

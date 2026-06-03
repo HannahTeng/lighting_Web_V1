@@ -50,3 +50,40 @@ INSERT INTO products (slug, name, tagline, category, price_jpy, description, pap
  'Ogawa Heavy 65 g/m²', '280 mm', '310 mm', 'E14 · 2400 K', 'Matte black · 1.5 m', '0.9 kg', 2, '60 min', '/products/productC.jpeg')
 
 ON CONFLICT (slug) DO NOTHING;
+
+-- ─────────────────────────────────────────────────────────────
+-- Admin backend tables
+-- ─────────────────────────────────────────────────────────────
+
+-- News / journal articles
+CREATE TABLE IF NOT EXISTS news (
+  id           SERIAL PRIMARY KEY,
+  slug         TEXT UNIQUE NOT NULL,
+  title        TEXT NOT NULL,
+  excerpt      TEXT,
+  body         TEXT,                  -- markdown / plain text
+  cover_image  TEXT,
+  status       TEXT DEFAULT 'draft',  -- draft | published
+  published_at TIMESTAMPTZ,
+  created_at   TIMESTAMPTZ DEFAULT now()
+);
+
+-- Discount codes (amount = percent 1-100 when kind='percent', else USD cents)
+CREATE TABLE IF NOT EXISTS coupons (
+  id          SERIAL PRIMARY KEY,
+  code        TEXT UNIQUE NOT NULL,
+  kind        TEXT NOT NULL,          -- 'percent' | 'fixed'
+  amount      INTEGER NOT NULL,
+  active      BOOLEAN DEFAULT true,
+  starts_at   TIMESTAMPTZ,
+  ends_at     TIMESTAMPTZ,
+  max_uses    INTEGER,
+  used_count  INTEGER DEFAULT 0,
+  created_at  TIMESTAMPTZ DEFAULT now()
+);
+
+-- Lightweight key/value store settings
+CREATE TABLE IF NOT EXISTS settings (
+  key   TEXT PRIMARY KEY,
+  value TEXT
+);
