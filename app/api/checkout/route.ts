@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     line_items: items.map((item) => ({
       price_data: {
         currency: "usd",
-        unit_amount: item.price_jpy, // stored as cents, e.g. 3999 = $39.99
+        unit_amount: item.price_cents, // stored as cents, e.g. 3999 = $39.99
         product_data: {
           name: item.name,
           images: [`${baseUrl}${item.image}`],

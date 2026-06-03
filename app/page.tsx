@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Hero from "@/components/hero";
 import Reveal from "@/components/reveal";
+import Footer from "@/components/footer";
 import { PRODUCTS, formatPrice } from "@/lib/products";
 
 /* ─── Category icons as inline SVGs ─── */
@@ -24,9 +25,9 @@ export default function HomePage() {
 
       {/* ── 02 CATALOG ── */}
       <section className="pb-20" id="catalog">
-        <div className="max-w-[1440px] mx-auto px-14">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-14">
           <Reveal>
-            <div className="grid gap-16 pt-[120px] pb-12 items-end" style={{ gridTemplateColumns: "1fr 2fr" }}>
+            <div className="grid gap-8 sm:gap-16 pt-16 sm:pt-[120px] pb-8 sm:pb-12 items-end grid-cols-1 sm:grid-cols-[1fr_2fr]">
               <div>
                 <div className="eyebrow mb-5">02 — The Catalog</div>
                 <h2
@@ -44,9 +45,8 @@ export default function HomePage() {
 
           <Reveal delay={1}>
             <div
-              className="grid gap-px"
+              className="grid gap-px grid-cols-2 sm:grid-cols-3 lg:grid-cols-6"
               style={{
-                gridTemplateColumns: "repeat(6,1fr)",
                 background: "var(--line)",
                 borderTop: "1px solid var(--line)",
                 borderBottom: "1px solid var(--line)",
@@ -56,14 +56,14 @@ export default function HomePage() {
                 <Link
                   key={c.n}
                   href="/shop"
-                  className="group flex flex-col gap-[60px] min-h-[340px] p-7 bg-bg hover:bg-bg-alt transition-colors duration-300"
+                  className="group flex flex-col gap-8 sm:gap-[60px] min-h-[200px] sm:min-h-[340px] p-5 sm:p-7 bg-bg hover:bg-bg-alt transition-colors duration-300"
                 >
                   <div className="flex justify-between items-start">
                     <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}>{c.n}</span>
                     <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink)", fontWeight: 500 }}>{c.count} items</span>
                   </div>
                   <div className="flex-1 grid place-items-center">
-                    <svg viewBox="0 0 100 100" width={92} height={92} fill="none" stroke="#3C3A36" strokeWidth="0.9" opacity={0.85} aria-hidden="true">
+                    <svg viewBox="0 0 100 100" width={92} height={92} fill="none" stroke="currentColor" strokeWidth="0.9" opacity={0.85} aria-hidden="true">
                       {c.d.split(" M").map((seg, i) => (
                         <path key={i} d={(i === 0 ? "" : "M") + seg} />
                       ))}
@@ -82,8 +82,8 @@ export default function HomePage() {
 
       {/* ── 03 FEATURED ── */}
       <section className="py-20" id="featured">
-        <div className="max-w-[1440px] mx-auto px-14">
-          <div className="grid gap-20 items-center" style={{ gridTemplateColumns: "1.1fr 1fr" }}>
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-14">
+          <div className="grid gap-10 sm:gap-20 items-center grid-cols-1 sm:grid-cols-[1.1fr_1fr]">
             {/* image */}
             <Reveal>
               <div className="relative aspect-[4/5] rounded-[4px] border border-[rgba(60,58,54,0.12)] overflow-hidden bg-bg-alt">
@@ -138,7 +138,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex gap-3.5 items-center">
-                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 32 }}>{formatPrice(featured.price_jpy)}</span>
+                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 32 }}>{formatPrice(featured.price_cents)}</span>
                   <span
                     className="pl-3.5 border-l border-[rgba(60,58,54,0.12)]"
                     style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}
@@ -175,9 +175,9 @@ export default function HomePage() {
         className="py-20 border-t border-b"
         style={{ background: "var(--bg-alt)", borderColor: "var(--line-soft)" }}
       >
-        <div className="max-w-[1440px] mx-auto px-14">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-14">
           <Reveal>
-            <div className="grid gap-16 pt-0 pb-12 items-end" style={{ gridTemplateColumns: "1fr 2fr" }}>
+            <div className="grid gap-8 sm:gap-16 pt-0 pb-8 sm:pb-12 items-end grid-cols-1 sm:grid-cols-[1fr_2fr]">
               <div>
                 <div className="eyebrow mb-5">04 — The Method</div>
                 <h2 className="leading-[0.98] tracking-[-0.02em]" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: "clamp(44px,5.2vw,76px)" }}>
@@ -190,19 +190,19 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          <div className="grid gap-12" style={{ gridTemplateColumns: "repeat(3,1fr)" }}>
+          <div className="grid gap-8 sm:gap-12 grid-cols-1 sm:grid-cols-3">
             {[
               {
                 step: "01", title: "Score.",
                 body: "Unroll the sheet and line up the valley creases. Each is pre-scored, so the paper knows where to bend. Trace them with a bone folder to deepen the memory.",
                 svg: (
                   <svg viewBox="0 0 200 160" fill="none" aria-hidden="true">
-                    <rect x="20" y="30" width="160" height="100" fill="#F4EADA" stroke="#3C3A36" strokeWidth="0.5"/>
-                    <g stroke="#3C3A36" strokeWidth="0.5" strokeDasharray="4 3" strokeLinecap="round">
+                    <rect x="20" y="30" width="160" height="100" fill="#F4EADA" stroke="currentColor" strokeWidth="0.5"/>
+                    <g stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 3" strokeLinecap="round">
                       <line x1="20" y1="80" x2="180" y2="80"/><line x1="100" y1="30" x2="100" y2="130"/>
                       <line x1="20" y1="30" x2="180" y2="130"/><line x1="180" y1="30" x2="20" y2="130"/>
                     </g>
-                    <circle cx="100" cy="80" r="2" fill="#3C3A36"/>
+                    <circle cx="100" cy="80" r="2" fill="currentColor"/>
                   </svg>
                 ),
               },
@@ -211,7 +211,7 @@ export default function HomePage() {
                 body: "Alternate mountain and valley along each rib. The flat sheet rises into a pleated tower. Work slowly — the paper remembers speed.",
                 svg: (
                   <svg viewBox="0 0 200 160" fill="none" aria-hidden="true">
-                    <g stroke="#3C3A36" strokeWidth="0.5">
+                    <g stroke="currentColor" strokeWidth="0.5">
                       <path d="M40 120 L70 40 L100 120 L130 40 L160 120 Z" fill="#F4EADA"/>
                       <path d="M40 120 L100 120 L70 40 Z" fill="#EADFC9"/>
                       <path d="M100 120 L160 120 L130 40 Z" fill="#EADFC9"/>
@@ -226,7 +226,7 @@ export default function HomePage() {
                 body: "Seat the brass collar into the apex, thread the cord, and let the bottom relax open. Hang it — and the shade finds its own silhouette.",
                 svg: (
                   <svg viewBox="0 0 200 160" fill="none" aria-hidden="true">
-                    <g stroke="#3C3A36" strokeWidth="0.5">
+                    <g stroke="currentColor" strokeWidth="0.5">
                       <ellipse cx="100" cy="90" rx="60" ry="38" fill="#F4EADA"/>
                       <path d="M100 52 L60 90 L100 128 L140 90 Z" fill="#EADFC9" opacity="0.8"/>
                       <line x1="100" y1="52" x2="100" y2="128"/>
@@ -262,8 +262,8 @@ export default function HomePage() {
 
       {/* ── 09 FOUNDER STORY ── */}
       <section id="founder" className="py-[120px]">
-        <div className="max-w-[1440px] mx-auto px-14">
-          <div className="grid gap-20 items-center" style={{ gridTemplateColumns: "1fr 1.1fr" }}>
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-14">
+          <div className="grid gap-10 sm:gap-20 items-center grid-cols-1 sm:grid-cols-[1fr_1.1fr]">
             <Reveal>
               <div className="flex flex-col gap-6">
                 <div className="eyebrow">Studio · The Maker</div>
@@ -324,7 +324,7 @@ export default function HomePage() {
                       </svg>
                     </div>
                     <div>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 500 }}>@jasenzhangorigami</div>
+                      <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 500 }}>@jasenzhangorigami</div>
                       <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 9.5, letterSpacing: "0.12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>Orikami Studio · TikTok</div>
                     </div>
                   </div>
@@ -374,51 +374,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer style={{ background: "var(--ink)", color: "#D7D2CA" }} className="pt-20 pb-10">
-        <div className="max-w-[1440px] mx-auto px-14">
-          <div className="grid gap-12 pb-16 border-b border-white/[0.08]" style={{ gridTemplateColumns: "1.3fr repeat(3,1fr)" }}>
-            <div className="flex flex-col gap-6">
-              <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 32, color: "#EFE9E0" }}>Orikami Studio</div>
-              <p style={{ color: "#A59E94", fontSize: 14, lineHeight: 1.65, maxWidth: 340 }}>
-                Sculptural paper lighting. Designed in Kyoto, assembled in Copenhagen, folded last by you.
-              </p>
-              <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#A59E94" }}>
-                orikami.studio · est. 2021
-              </div>
-            </div>
-            {[
-              { title: "Shop",    links: ["Pendants","Tables","Wall","DIY Kits","Paper Shades","Accessories"] },
-              { title: "Studio",  links: ["Journal","Materials","Atelier visits","Trade program","Press kit"] },
-              { title: "Support", links: ["Assembly guides","Shipping & returns","Care & repair","Contact","FAQ"] },
-            ].map(({ title, links }) => (
-              <div key={title}>
-                <h5 style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "#EFE9E0", fontWeight: 500, marginBottom: 18 }}>
-                  {title}
-                </h5>
-                {links.map((l) => (
-                  <a
-                    key={l}
-                    href="#"
-                    className="block py-1.5 text-[13.5px] transition-colors hover:text-[#EFE9E0]"
-                    style={{ color: "#A59E94" }}
-                  >
-                    {l}
-                  </a>
-                ))}
-              </div>
-            ))}
-          </div>
-          <div
-            className="pt-7 flex justify-between"
-            style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#7B756C" }}
-          >
-            <span>© 2026 Orikami Studio</span>
-            <span>京都 · København</span>
-            <span>Designed to arrive flat.</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

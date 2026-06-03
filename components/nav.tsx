@@ -12,10 +12,10 @@ export default function Nav() {
   return (
     <>
       <nav className="fixed top-0 inset-x-0 z-50 backdrop-blur-[14px] bg-[rgba(245,240,235,0.72)] border-b border-[rgba(60,58,54,0.06)]">
-        <div className="max-w-[1440px] mx-auto px-14 h-[52px] grid grid-cols-[1fr_auto_1fr] items-center gap-8">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-14 h-[52px] grid grid-cols-[1fr_auto_1fr] items-center gap-4 sm:gap-8">
           {/* brand */}
           <Link href="/" className="flex items-center gap-2.5">
-            <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="#3C3A36" strokeWidth="1.2">
+            <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2">
               <path d="M16 3 L29 16 L16 29 L3 16 Z" />
               <path d="M16 3 L16 29 M3 16 L29 16 M8 8 L24 24 M8 24 L24 8" />
             </svg>

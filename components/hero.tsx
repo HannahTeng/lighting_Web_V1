@@ -132,7 +132,7 @@ export default function Hero() {
           style={{ background: "linear-gradient(180deg,#F5F0EB 0%,#EFE8E0 100%)" }}
         >
           {/* SVG fold */}
-          <div style={{ width: "min(78vh,720px)", aspectRatio: "1" }} className="relative">
+          <div style={{ width: "min(78vmin,720px)", aspectRatio: "1" }} className="relative">
             <svg viewBox="-100 -100 200 200" className="w-full h-full overflow-visible" aria-hidden="true">
               <defs>
                 <radialGradient id="paperGlow" cx="0.5" cy="0.5" r="0.6">
@@ -151,23 +151,23 @@ export default function Hero() {
 
         {/* overlay text */}
         <div className="absolute inset-0 pointer-events-none grid" style={{ gridTemplateRows: "auto 1fr auto" }}>
-          <div className="flex justify-between px-14 pt-[88px] text-ink-soft">
+          <div className="flex justify-between px-5 sm:px-14 pt-[60px] sm:pt-[88px] text-ink-soft">
             <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase" }}>
               Folded Light Collection · 2026
             </span>
-            <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+            <span className="hidden sm:block" style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase" }}>
               Vol. 04 — Spring Index
             </span>
           </div>
 
-          <div className="self-end px-14 pb-1">
-            <div className="eyebrow mb-7">Orikami Studio · Kyoto · Copenhagen</div>
+          <div className="self-end px-5 sm:px-14 pb-1">
+            <div className="eyebrow mb-4 sm:mb-7">Orikami Studio · Kyoto · Copenhagen</div>
             <h1
               className="leading-[0.92] tracking-[-0.025em] text-ink"
               style={{
                 fontFamily: "var(--font-cormorant)",
                 fontWeight: 300,
-                fontSize: "clamp(64px,11vw,168px)",
+                fontSize: "clamp(48px,11vw,168px)",
               }}
             >
               Folded
@@ -176,11 +176,8 @@ export default function Hero() {
             </h1>
           </div>
 
-          <div
-            className="grid px-14 pb-14 items-end gap-14"
-            style={{ gridTemplateColumns: "1fr 1fr 1fr" }}
-          >
-            <p className="text-ink-soft text-sm leading-[1.65] max-w-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 px-5 sm:px-14 pb-10 sm:pb-14 items-end gap-6 sm:gap-14">
+            <p className="hidden sm:block text-ink-soft text-sm leading-[1.65] max-w-xs">
               Sculptural paper lighting, shipped flat, folded by you. Designed in Kyoto. Finished by hand.
             </p>
             <div className="flex flex-col gap-2.5 items-center">
@@ -198,7 +195,7 @@ export default function Hero() {
                 Scroll to fold
               </div>
             </div>
-            <div className="justify-self-end text-right">
+            <div className="hidden sm:block justify-self-end text-right">
               <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}>
                 Chapter 01
               </div>

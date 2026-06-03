@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     if (sql) {
       try {
         await sql`
-          INSERT INTO orders (stripe_session_id, email, status, total_jpy)
+          INSERT INTO orders (stripe_session_id, email, status, total_cents)
           VALUES (${session.id}, ${session.customer_details?.email ?? ""}, 'paid', ${session.amount_total ?? 0})
           ON CONFLICT (stripe_session_id) DO NOTHING
         `;

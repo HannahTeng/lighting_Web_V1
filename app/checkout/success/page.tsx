@@ -9,14 +9,13 @@ export default function SuccessPage() {
 
   useEffect(() => {
     clear();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [clear]);
 
   return (
     <div className="min-h-screen grid place-items-center" style={{ background: "var(--bg)" }}>
       <div className="max-w-md text-center flex flex-col items-center gap-8 px-8">
         {/* origami mark */}
-        <svg width="48" height="48" viewBox="0 0 32 32" fill="none" stroke="#3C3A36" strokeWidth="1.2" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden="true">
           <path d="M16 3 L29 16 L16 29 L3 16 Z" />
           <path d="M16 3 L16 29 M3 16 L29 16 M8 8 L24 24 M8 24 L24 8" />
         </svg>

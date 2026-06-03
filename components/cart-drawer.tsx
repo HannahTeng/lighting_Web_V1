@@ -91,20 +91,20 @@ export default function CartDrawer({
                 <div className="flex-1 min-w-0">
                   <div className="font-serif text-[17px] leading-tight">{item.name}</div>
                   <div className="font-mono text-[10px] tracking-[0.12em] text-ink-soft uppercase mt-0.5">
-                    {formatPrice(item.price_jpy)}
+                    {formatPrice(item.price_cents)}
                   </div>
                   <div className="flex items-center gap-3 mt-2.5">
                     <div className="flex items-center border border-[rgba(60,58,54,0.12)] rounded-sm">
                       <button
                         onClick={() => setQty(item.slug, item.quantity - 1)}
-                        className="w-8 h-8 font-mono text-sm hover:bg-bg-alt transition-colors"
+                        className="w-11 h-11 font-mono text-sm hover:bg-bg-alt transition-colors"
                       >
                         −
                       </button>
                       <span className="w-8 text-center font-mono text-xs">{item.quantity}</span>
                       <button
                         onClick={() => setQty(item.slug, item.quantity + 1)}
-                        className="w-8 h-8 font-mono text-sm hover:bg-bg-alt transition-colors"
+                        className="w-11 h-11 font-mono text-sm hover:bg-bg-alt transition-colors"
                       >
                         +
                       </button>
@@ -118,7 +118,7 @@ export default function CartDrawer({
                   </div>
                 </div>
                 <div className="font-serif text-[17px] shrink-0">
-                  {formatPrice(item.price_jpy * item.quantity)}
+                  {formatPrice(item.price_cents * item.quantity)}
                 </div>
               </div>
             ))

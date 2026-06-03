@@ -5,6 +5,8 @@ import Link from "next/link";
 import { PRODUCTS, getProduct, formatPrice } from "@/lib/products";
 import Reveal from "@/components/reveal";
 import AddToCart from "@/components/add-to-cart";
+import ProductCard from "@/components/product-card";
+import Footer from "@/components/footer";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -31,7 +33,7 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="pt-[52px]">
-      <div className="max-w-[1440px] mx-auto px-14 py-16">
+      <div className="max-w-[1440px] mx-auto px-5 sm:px-14 py-10 sm:py-16">
 
         {/* breadcrumb */}
         <nav
@@ -47,7 +49,7 @@ export default async function ProductPage({ params }: Props) {
         </nav>
 
         {/* main grid */}
-        <div className="grid gap-16 items-start" style={{ gridTemplateColumns: "1.25fr 1fr" }}>
+        <div className="grid gap-10 sm:gap-16 items-start grid-cols-1 sm:grid-cols-[1.25fr_1fr]">
 
           {/* gallery */}
           <Reveal>
@@ -77,7 +79,7 @@ export default async function ProductPage({ params }: Props) {
 
           {/* product info — sticky */}
           <Reveal delay={1}>
-            <div className="sticky top-[80px] flex flex-col gap-6">
+            <div className="sm:sticky sm:top-[80px] flex flex-col gap-6">
               {/* head */}
               <div>
                 <div
@@ -88,14 +90,14 @@ export default async function ProductPage({ params }: Props) {
                 </div>
                 <h1
                   className="leading-[1] tracking-[-0.015em]"
-                  style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: 48 }}
+                  style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: "clamp(28px,4.5vw,48px)" }}
                 >
                   {product.name.split(" ").slice(0, -1).join(" ")}
                   <br />
                   <em className="italic">{product.name.split(" ").at(-1)}.</em>
                 </h1>
                 <div className="flex justify-between items-baseline pt-2.5">
-                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28 }}>{formatPrice(product.price_jpy)}</span>
+                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 28 }}>{formatPrice(product.price_cents)}</span>
                   <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}>
                     SKU · {product.slug.toUpperCase().slice(0, 12)}
                   </span>
@@ -176,7 +178,7 @@ export default async function ProductPage({ params }: Props) {
                   ].map(([name, meta]) => (
                     <div
                       key={name}
-                      className="flex justify-between items-center py-3.5 bg-bg hover:bg-bg-alt hover:px-2 transition-all cursor-pointer"
+                      className="flex justify-between items-center px-4 py-3.5 bg-bg hover:bg-bg-alt transition-colors cursor-pointer"
                     >
                       <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 17 }}>{name}</span>
                       <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}>{meta}</span>
@@ -190,7 +192,7 @@ export default async function ProductPage({ params }: Props) {
 
         {/* ── RELATED ── */}
         <div className="mt-24 pt-16 border-t border-[rgba(60,58,54,0.06)]">
-          <div className="grid gap-16 items-end mb-10" style={{ gridTemplateColumns: "1fr 2fr" }}>
+          <div className="grid gap-8 sm:gap-16 items-end mb-10 grid-cols-1 sm:grid-cols-[1fr_2fr]">
             <div>
               <div className="eyebrow mb-5">08 — Related</div>
               <h2
@@ -205,46 +207,17 @@ export default async function ProductPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="grid gap-x-6 gap-y-8" style={{ gridTemplateColumns: "repeat(2,1fr)" }}>
+          <div className="grid gap-x-6 gap-y-8 grid-cols-1 sm:grid-cols-2">
             {related.map((p, i) => (
               <Reveal key={p.slug} delay={i + 1}>
-                <Link href={`/product/${p.slug}`} className="group flex flex-col gap-3.5 cursor-pointer">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[4px] border border-[rgba(60,58,54,0.12)] bg-bg-alt">
-                    <Image
-                      src={p.image}
-                      alt={p.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      sizes="(max-width:768px) 50vw, 33vw"
-                    />
-                    <span className="absolute top-3 left-3 font-mono text-[9.5px] tracking-[0.14em] uppercase bg-bg-alt/90 text-ink px-2 py-1 rounded-[2px] border border-[rgba(60,58,54,0.08)]">
-                      {p.category}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-baseline">
-                    <div>
-                      <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 19 }}>{p.name}</div>
-                      <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-soft)", marginTop: 2 }}>{p.paper}</div>
-                    </div>
-                    <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 19 }}>{formatPrice(p.price_jpy)}</div>
-                  </div>
-                </Link>
+                <ProductCard product={p} />
               </Reveal>
             ))}
           </div>
         </div>
       </div>
 
-      {/* footer */}
-      <footer style={{ background: "var(--ink)", color: "#D7D2CA" }} className="pt-20 pb-10 mt-16">
-        <div className="max-w-[1440px] mx-auto px-14">
-          <div className="pt-7 flex justify-between" style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#7B756C" }}>
-            <span>© 2026 Orikami Studio</span>
-            <span>京都 · København</span>
-            <span>Designed to arrive flat.</span>
-          </div>
-        </div>
-      </footer>
+      <Footer className="mt-16" />
     </div>
   );
 }

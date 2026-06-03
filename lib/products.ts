@@ -4,7 +4,7 @@ export type Product = {
   name: string;
   tagline: string;
   category: string;
-  price_jpy: number;
+  price_cents: number;
   description: string;
   paper: string;
   diameter: string;
@@ -26,7 +26,7 @@ export const PRODUCTS: Product[] = [
     name: "Kirigami Pendant 60",
     tagline: "Twelve facets. One sheet.",
     category: "Pendant",
-    price_jpy: 3999,
+    price_cents: 3999,
     description:
       "A twelve-sided paper dome hand-folded from a single sheet of Mino washi. The crease pattern gathers at the apex and opens downward into a soft, directional glow — diffuse enough to sit above a dining table, precise enough to suggest geometry.",
     paper: "Mino washi 45 g/m²",
@@ -46,7 +46,7 @@ export const PRODUCTS: Product[] = [
     name: "Tsuru Table Light",
     tagline: "A bird that becomes a lamp.",
     category: "Table",
-    price_jpy: 3999,
+    price_cents: 3999,
     description:
       "An origami crane perched on a brushed-brass arm, mounted on a travertine plinth. The translucent body diffuses a warm 2200K glow — part sculpture, part functional light. Entirely hand-assembled.",
     paper: "Shirokiku 38 g/m²",
@@ -66,7 +66,7 @@ export const PRODUCTS: Product[] = [
     name: "Maru Globe",
     tagline: "A spiral folded into light.",
     category: "Table",
-    price_jpy: 3999,
+    price_cents: 3999,
     description:
       "A spherical origami globe whose surface is a single spiral crease radiating from the crown. Placed on a travertine tile, the Maru Globe turns any surface into a moment. The dark aluminium base grounds it.",
     paper: "Ogawa Heavy 65 g/m²",
