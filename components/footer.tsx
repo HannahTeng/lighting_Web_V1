@@ -44,6 +44,7 @@ export default function Footer({ className = "" }: { className?: string }) {
           <span>© 2026 Orikami Studio</span>
           <span>京都 · København</span>
           <span>Designed to arrive flat.</span>
+          <a href="/admin" className="transition-colors hover:text-[#EFE9E0]">Admin</a>
         </div>
       </div>
     </footer>
