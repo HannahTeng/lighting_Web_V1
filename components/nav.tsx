@@ -25,18 +25,18 @@ export default function Nav() {
             </div>
           </Link>
 
-          {/* links */}
-          <div className="hidden md:flex gap-7">
+          {/* links — Shop stays visible on mobile, the rest from md up */}
+          <div className="flex gap-7">
             {[
-              { href: "/shop", label: "Shop" },
+              { href: "/shop", label: "Shop", mobile: true },
               { href: "/journal", label: "Journal" },
               { href: "/#how-it-folds", label: "How it folds" },
               { href: "/#founder", label: "Studio" },
-            ].map(({ href, label }) => (
+            ].map(({ href, label, mobile }) => (
               <Link
                 key={href}
                 href={href}
-                className="font-mono text-[10.5px] tracking-[0.16em] uppercase text-ink relative group"
+                className={`${mobile ? "" : "hidden md:block "}font-mono text-[10.5px] tracking-[0.16em] uppercase text-ink relative group`}
               >
                 {label}
                 <span className="absolute inset-x-0 bottom-0 h-px bg-ink scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />

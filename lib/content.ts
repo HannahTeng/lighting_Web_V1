@@ -11,6 +11,9 @@ export type HomeContent = {
   catalog_intro: string;
   featured_eyebrow: string;
   featured_note: string;
+  products_eyebrow: string;
+  products_heading: string;
+  products_heading_em: string;
   method_eyebrow: string;
   method_heading: string;
   method_heading_em: string;
@@ -37,7 +40,10 @@ export const DEFAULT_HOME_CONTENT: HomeContent = {
     "Six families, one material sensibility. Each shade is flat-packed and folded by the owner — a last step by hand before it takes its place in the room.",
   featured_eyebrow: "03 — Featured · New Season",
   featured_note: "Ships flat · 1–2 weeks",
-  method_eyebrow: "04 — The Method",
+  products_eyebrow: "04 — The Collection",
+  products_heading: "All",
+  products_heading_em: "products.",
+  method_eyebrow: "05 — The Method",
   method_heading: "How it",
   method_heading_em: "folds.",
   method_intro:

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Hero from "@/components/hero";
 import Reveal from "@/components/reveal";
 import Footer from "@/components/footer";
+import ProductCard from "@/components/product-card";
 import { formatPrice } from "@/lib/products";
 import { listProducts } from "@/lib/admin/products";
 import { getHomeContent } from "@/lib/content";
@@ -172,7 +173,41 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 04 HOW IT FOLDS ── */}
+      {/* ── 04 ALL PRODUCTS ── */}
+      <section className="py-20" id="products">
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-14">
+          <Reveal>
+            <div className="grid gap-8 sm:gap-16 pb-8 sm:pb-12 items-end grid-cols-1 sm:grid-cols-[1fr_auto]">
+              <div>
+                <div className="eyebrow mb-5">{content.products_eyebrow}</div>
+                <h2
+                  className="leading-[0.98] tracking-[-0.02em]"
+                  style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: "clamp(44px,5.2vw,76px)" }}
+                >
+                  {content.products_heading} <em className="italic text-ink-soft">{content.products_heading_em}</em>
+                </h2>
+              </div>
+              <Link
+                href="/shop"
+                className="inline-flex items-center gap-3.5 self-end px-7 py-4 border border-[rgba(60,58,54,0.12)] rounded-sm hover:border-ink hover:bg-ink hover:text-bg-alt transition-all"
+                style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.2em", textTransform: "uppercase" }}
+              >
+                View all {products.length} products →
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-y-8 gap-x-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {products.slice(0, 6).map((p, i) => (
+              <Reveal key={p.slug} delay={(i % 3) + 1}>
+                <ProductCard product={p} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 05 HOW IT FOLDS ── */}
       <section
         id="how-it-folds"
         className="py-20 border-t border-b"

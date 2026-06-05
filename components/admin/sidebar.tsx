@@ -5,17 +5,23 @@ import { usePathname } from "next/navigation";
 import { logoutAction } from "@/app/admin/_actions/auth";
 
 const GROUPS: {
-  label: string;
+  label?: string;
   items: { href: string; label: string; exact?: boolean }[];
 }[] = [
   {
-    label: "Operations",
+    // Top — no group label
+    items: [{ href: "/admin", label: "Overview", exact: true }],
+  },
+  {
+    label: "Catalog",
+    items: [{ href: "/admin/products", label: "Products" }],
+  },
+  {
+    label: "Sales",
     items: [
-      { href: "/admin", label: "Overview", exact: true },
-      { href: "/admin/products", label: "Products" },
       { href: "/admin/orders", label: "Orders" },
-      { href: "/admin/customers", label: "Customers" },
       { href: "/admin/coupons", label: "Coupons" },
+      { href: "/admin/customers", label: "Customers" },
     ],
   },
   {
@@ -58,10 +64,12 @@ export default function Sidebar() {
       {/* nav */}
       <nav className="flex-1 overflow-y-auto py-5 px-3 space-y-6">
         {GROUPS.map((g) => (
-          <div key={g.label}>
-            <div className="px-3 mb-2 font-mono text-[8.5px] tracking-[0.2em] uppercase text-stone">
-              {g.label}
-            </div>
+          <div key={g.label ?? g.items[0].href}>
+            {g.label && (
+              <div className="px-3 mb-2 font-mono text-[8.5px] tracking-[0.2em] uppercase text-stone">
+                {g.label}
+              </div>
+            )}
             <ul className="space-y-0.5">
               {g.items.map((it) => (
                 <li key={it.href}>

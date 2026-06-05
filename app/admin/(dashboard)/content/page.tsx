@@ -59,9 +59,25 @@ export default async function ContentPage() {
             </Field>
           </div>
 
+          {/* ── All Products ── */}
+          <div className="space-y-4">
+            <SectionTitle>04 — All products</SectionTitle>
+            <Field label="Eyebrow">
+              <Input name="products_eyebrow" defaultValue={content.products_eyebrow} />
+            </Field>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Field label="Heading">
+                <Input name="products_heading" defaultValue={content.products_heading} />
+              </Field>
+              <Field label="Heading (italic part)">
+                <Input name="products_heading_em" defaultValue={content.products_heading_em} />
+              </Field>
+            </div>
+          </div>
+
           {/* ── Method ── */}
           <div className="space-y-4">
-            <SectionTitle>04 — How it folds</SectionTitle>
+            <SectionTitle>05 — How it folds</SectionTitle>
             <Field label="Eyebrow">
               <Input name="method_eyebrow" defaultValue={content.method_eyebrow} />
             </Field>
