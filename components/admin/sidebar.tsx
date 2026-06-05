@@ -20,7 +20,10 @@ const GROUPS: {
   },
   {
     label: "Content",
-    items: [{ href: "/admin/news", label: "News" }],
+    items: [
+      { href: "/admin/content", label: "Homepage" },
+      { href: "/admin/news", label: "News" },
+    ],
   },
   {
     label: "System",

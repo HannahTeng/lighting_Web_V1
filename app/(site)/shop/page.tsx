@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import ProductCard from "@/components/product-card";
 import Reveal from "@/components/reveal";
 import Footer from "@/components/footer";
-import { PRODUCTS } from "@/lib/products";
+import { listProducts } from "@/lib/admin/products";
 
 export const metadata: Metadata = {
   title: "Shop — Orikami Studio",
   description: "Browse all Orikami origami lighting — pendants, table lights, and DIY kits.",
 };
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const products = await listProducts();
   return (
     <div className="pt-[52px]" style={{ background: "var(--bg-alt)" }}>
       <div className="max-w-[1440px] mx-auto px-5 sm:px-14">
@@ -31,7 +32,7 @@ export default function ShopPage() {
             <div
               style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)", marginBottom: 6 }}
             >
-              {PRODUCTS.length} items
+              {products.length} items
             </div>
             <div
               style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink)", fontWeight: 500 }}
@@ -46,7 +47,7 @@ export default function ShopPage() {
           <div
             className="grid gap-y-8 gap-x-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {PRODUCTS.map((p, i) => (
+            {products.map((p, i) => (
               <Reveal key={p.slug} delay={(i % 3) + 1}>
                 <ProductCard product={p} />
               </Reveal>

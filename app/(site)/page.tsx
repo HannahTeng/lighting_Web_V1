@@ -3,7 +3,9 @@ import Link from "next/link";
 import Hero from "@/components/hero";
 import Reveal from "@/components/reveal";
 import Footer from "@/components/footer";
-import { PRODUCTS, formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
+import { listProducts } from "@/lib/admin/products";
+import { getHomeContent } from "@/lib/content";
 
 /* ─── Category icons as inline SVGs ─── */
 const CAT_ICONS = [
@@ -15,9 +17,10 @@ const CAT_ICONS = [
   { n: "06", count: "14", name: "Accessories",    d: "M50 50 m-22 0 a22 22 0 1 0 44 0 a22 22 0 1 0 -44 0 m16 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M50 28 L50 18 M50 72 L50 82 M28 50 L18 50 M72 50 L82 50" },
 ];
 
-const featured = PRODUCTS[0]; // Kirigami Pendant 60
-
-export default function HomePage() {
+export default async function HomePage() {
+  const [content, products] = await Promise.all([getHomeContent(), listProducts()]);
+  const featured =
+    products.find((p) => p.slug === content.featured_slug) ?? products[0];
   return (
     <>
       {/* ── 01 HERO ── */}
@@ -29,16 +32,16 @@ export default function HomePage() {
           <Reveal>
             <div className="grid gap-8 sm:gap-16 pt-16 sm:pt-[120px] pb-8 sm:pb-12 items-end grid-cols-1 sm:grid-cols-[1fr_2fr]">
               <div>
-                <div className="eyebrow mb-5">02 — The Catalog</div>
+                <div className="eyebrow mb-5">{content.catalog_eyebrow}</div>
                 <h2
                   className="leading-[0.98] tracking-[-0.02em]"
                   style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: "clamp(44px,5.2vw,76px)" }}
                 >
-                  Browse by <em className="italic text-ink-soft">form.</em>
+                  {content.catalog_heading} <em className="italic text-ink-soft">{content.catalog_heading_em}</em>
                 </h2>
               </div>
               <p className="text-ink-soft text-[14.5px] leading-[1.7] max-w-[460px]">
-                Six families, one material sensibility. Each shade is flat-packed and folded by the owner — a last step by hand before it takes its place in the room.
+                {content.catalog_intro}
               </p>
             </div>
           </Reveal>
@@ -108,7 +111,7 @@ export default function HomePage() {
             {/* info */}
             <Reveal delay={1}>
               <div className="flex flex-col gap-7 pr-5">
-                <div className="eyebrow">03 — Featured · New Season</div>
+                <div className="eyebrow">{content.featured_eyebrow}</div>
                 <h3
                   className="leading-[1] tracking-[-0.02em]"
                   style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: 56 }}
@@ -143,7 +146,7 @@ export default function HomePage() {
                     className="pl-3.5 border-l border-[rgba(60,58,54,0.12)]"
                     style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}
                   >
-                    Ships flat · 1–2 weeks
+                    {content.featured_note}
                   </span>
                 </div>
 
@@ -179,13 +182,13 @@ export default function HomePage() {
           <Reveal>
             <div className="grid gap-8 sm:gap-16 pt-0 pb-8 sm:pb-12 items-end grid-cols-1 sm:grid-cols-[1fr_2fr]">
               <div>
-                <div className="eyebrow mb-5">04 — The Method</div>
+                <div className="eyebrow mb-5">{content.method_eyebrow}</div>
                 <h2 className="leading-[0.98] tracking-[-0.02em]" style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: "clamp(44px,5.2vw,76px)" }}>
-                  How it <em className="italic text-ink-soft">folds.</em>
+                  {content.method_heading} <em className="italic text-ink-soft">{content.method_heading_em}</em>
                 </h2>
               </div>
               <p className="text-ink-soft text-[14.5px] leading-[1.7] max-w-[460px]">
-                Every lamp arrives as a flat, scored sheet. Three moves — a valley, a mountain, a seam — turn it into volume. No glue. No tools. No rush.
+                {content.method_intro}
               </p>
             </div>
           </Reveal>
@@ -193,8 +196,7 @@ export default function HomePage() {
           <div className="grid gap-8 sm:gap-12 grid-cols-1 sm:grid-cols-3">
             {[
               {
-                step: "01", title: "Score.",
-                body: "Unroll the sheet and line up the valley creases. Each is pre-scored, so the paper knows where to bend. Trace them with a bone folder to deepen the memory.",
+                step: "01",
                 svg: (
                   <svg viewBox="0 0 200 160" fill="none" aria-hidden="true">
                     <rect x="20" y="30" width="160" height="100" fill="#F4EADA" stroke="currentColor" strokeWidth="0.5"/>
@@ -207,8 +209,7 @@ export default function HomePage() {
                 ),
               },
               {
-                step: "02", title: "Fold.",
-                body: "Alternate mountain and valley along each rib. The flat sheet rises into a pleated tower. Work slowly — the paper remembers speed.",
+                step: "02",
                 svg: (
                   <svg viewBox="0 0 200 160" fill="none" aria-hidden="true">
                     <g stroke="currentColor" strokeWidth="0.5">
@@ -222,8 +223,7 @@ export default function HomePage() {
                 ),
               },
               {
-                step: "03", title: "Close.",
-                body: "Seat the brass collar into the apex, thread the cord, and let the bottom relax open. Hang it — and the shade finds its own silhouette.",
+                step: "03",
                 svg: (
                   <svg viewBox="0 0 200 160" fill="none" aria-hidden="true">
                     <g stroke="currentColor" strokeWidth="0.5">
@@ -238,7 +238,7 @@ export default function HomePage() {
                   </svg>
                 ),
               },
-            ].map(({ step, title, body, svg }, i) => (
+            ].map(({ step, svg }, i) => (
               <Reveal key={step} delay={i + 1}>
                 <div className="flex flex-col gap-7">
                   <div
@@ -250,9 +250,9 @@ export default function HomePage() {
                     <span style={{ fontFamily: "var(--font-jetbrains)", fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)" }}>
                       Step {step}
                     </span>
-                    <h4 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: 30 }}>{title}</h4>
+                    <h4 style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: 30 }}>{content.method_steps[i]?.title}</h4>
                   </div>
-                  <p className="text-ink-soft text-sm leading-[1.7]">{body}</p>
+                  <p className="text-ink-soft text-sm leading-[1.7]">{content.method_steps[i]?.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -266,22 +266,22 @@ export default function HomePage() {
           <div className="grid gap-10 sm:gap-20 items-center grid-cols-1 sm:grid-cols-[1fr_1.1fr]">
             <Reveal>
               <div className="flex flex-col gap-6">
-                <div className="eyebrow">Studio · The Maker</div>
+                <div className="eyebrow">{content.founder_eyebrow}</div>
                 <h2
                   className="leading-[1.02] tracking-[-0.02em]"
                   style={{ fontFamily: "var(--font-cormorant)", fontWeight: 300, fontSize: "clamp(44px,5vw,72px)" }}
                 >
-                  Paper is the<br />
-                  <em className="italic text-ink-soft">first material.</em>
+                  {content.founder_heading}<br />
+                  <em className="italic text-ink-soft">{content.founder_heading_em}</em>
                 </h2>
                 <p className="text-ink-soft leading-[1.7] max-w-[460px]">
-                  Jasen Zhang has been folding paper since childhood — first cranes, then tessellations, then light. Every Orikami shade begins as a single square, scored by hand, shaped over weeks of iteration. No software. No CNC. Just paper, patience, and a bone folder.
+                  {content.founder_para1}
                 </p>
                 <p className="text-ink-soft leading-[1.7] max-w-[460px]">
-                  Follow the studio&#39;s process on TikTok — from flat sheet to finished shade, every fold documented.
+                  {content.founder_para2}
                 </p>
                 <a
-                  href="https://www.tiktok.com/@jasenzhangorigami"
+                  href={content.tiktok_url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3.5 self-start px-7 py-4 border border-[rgba(60,58,54,0.12)] rounded-sm hover:border-ink hover:bg-ink hover:text-bg-alt transition-all"
@@ -290,16 +290,12 @@ export default function HomePage() {
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.94a8.17 8.17 0 0 0 4.78 1.52V7.01a4.85 4.85 0 0 1-1.01-.32z"/>
                   </svg>
-                  @jasenzhangorigami →
+                  {content.tiktok_handle} →
                 </a>
 
                 {/* stats row */}
                 <div className="grid grid-cols-3 gap-px mt-4" style={{ background: "var(--line)", border: "1px solid var(--line)" }}>
-                  {[
-                    ["12+", "Years folding"],
-                    ["200+", "Unique patterns"],
-                    ["3", "Papers, sourced in Japan"],
-                  ].map(([num, label]) => (
+                  {content.founder_stats.map(({ num, label }) => (
                     <div key={label} className="bg-bg px-5 py-4">
                       <div style={{ fontFamily: "var(--font-cormorant)", fontSize: 32, lineHeight: 1 }}>{num}</div>
                       <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink-soft)", marginTop: 4 }}>{label}</div>
@@ -324,14 +320,14 @@ export default function HomePage() {
                       </svg>
                     </div>
                     <div>
-                      <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 500 }}>@jasenzhangorigami</div>
+                      <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 500 }}>{content.tiktok_handle}</div>
                       <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: 9.5, letterSpacing: "0.12em", color: "var(--ink-soft)", textTransform: "uppercase" }}>Orikami Studio · TikTok</div>
                     </div>
                   </div>
 
                   {/* video thumbnails grid */}
                   <div className="grid grid-cols-3 gap-2">
-                    {PRODUCTS.map((p, i) => (
+                    {products.slice(0, 3).map((p, i) => (
                       <div
                         key={p.slug}
                         className="relative aspect-[9/16] rounded-sm overflow-hidden bg-bg"
@@ -358,7 +354,7 @@ export default function HomePage() {
                       Process · Behind the fold
                     </span>
                     <a
-                      href="https://www.tiktok.com/@jasenzhangorigami"
+                      href={content.tiktok_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ fontFamily: "var(--font-jetbrains)", fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ink)" }}

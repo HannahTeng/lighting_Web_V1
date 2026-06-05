@@ -135,6 +135,16 @@ export function EmptyRow({ colSpan, label }: { colSpan: number; label: string })
   );
 }
 
+/* ── Form section title ──────────────────────────────────── */
+
+export function SectionTitle({ children }: { children: ReactNode }) {
+  return (
+    <div className="font-mono text-[9.5px] tracking-[0.2em] uppercase text-stone border-b border-line-soft pb-2">
+      {children}
+    </div>
+  );
+}
+
 /* ── Form fields ─────────────────────────────────────────── */
 
 export function Field({

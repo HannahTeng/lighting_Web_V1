@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { PRODUCTS, getProduct, formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
+import { listProducts, getProductBySlug } from "@/lib/admin/products";
 import Reveal from "@/components/reveal";
 import AddToCart from "@/components/add-to-cart";
 import ProductCard from "@/components/product-card";
@@ -10,13 +11,9 @@ import Footer from "@/components/footer";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export async function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ slug: p.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
     title: `${product.name} — Orikami Studio`,
@@ -26,10 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const [product, all] = await Promise.all([getProductBySlug(slug), listProducts()]);
   if (!product) notFound();
 
-  const related = PRODUCTS.filter((p) => p.slug !== product.slug);
+  const related = all.filter((p) => p.slug !== product.slug).slice(0, 4);
 
   return (
     <div className="pt-[52px]">

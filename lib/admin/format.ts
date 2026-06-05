@@ -48,3 +48,14 @@ export function slugify(input: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+/* ── FormData helpers (shared by server actions) ─────────── */
+
+export function str(fd: FormData, k: string): string {
+  return String(fd.get(k) ?? "").trim();
+}
+
+export function int(fd: FormData, k: string): number {
+  const n = parseInt(String(fd.get(k) ?? ""), 10);
+  return Number.isFinite(n) ? n : 0;
+}

@@ -3,14 +3,8 @@
 import { getDb } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { str, int } from "@/lib/admin/format";
 
-function str(fd: FormData, k: string): string {
-  return String(fd.get(k) ?? "").trim();
-}
-function int(fd: FormData, k: string): number {
-  const n = parseInt(String(fd.get(k) ?? ""), 10);
-  return Number.isFinite(n) ? n : 0;
-}
 function dollarsToCents(fd: FormData, k: string): number {
   const n = parseFloat(String(fd.get(k) ?? "0"));
   return Number.isFinite(n) ? Math.round(n * 100) : 0;

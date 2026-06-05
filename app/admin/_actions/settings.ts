@@ -1,24 +1,20 @@
 "use server";
 
-import { getDb } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { setSettings } from "@/lib/admin/settings";
+import { str } from "@/lib/admin/format";
+
+const KEYS = [
+  "store_name",
+  "currency",
+  "support_email",
+  "footer_tagline",
+  "footer_meta",
+  "footer_location",
+  "footer_note",
+] as const;
 
 export async function saveSettings(formData: FormData): Promise<void> {
-  const sql = getDb();
-  if (!sql) throw new Error("Database not configured");
-
-  const entries: [string, string][] = [
-    ["store_name", String(formData.get("store_name") ?? "")],
-    ["currency", String(formData.get("currency") ?? "USD")],
-    ["support_email", String(formData.get("support_email") ?? "")],
-  ];
-
-  for (const [key, value] of entries) {
-    await sql`
-      INSERT INTO settings (key, value) VALUES (${key}, ${value})
-      ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value
-    `;
-  }
-
+  await setSettings(KEYS.map((k) => [k, str(formData, k)]));
   revalidatePath("/admin/settings");
 }

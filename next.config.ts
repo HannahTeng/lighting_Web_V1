@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      // Product images uploaded via admin → Vercel Blob
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+    ],
   },
 };
 
